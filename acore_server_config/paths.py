@@ -20,3 +20,16 @@ bin_pytest = dir_venv_bin / "pytest"
 dir_htmlcov = dir_project_root / "htmlcov"
 path_cov_index_html = dir_htmlcov / "index.html"
 dir_unit_test = dir_project_root / "tests"
+
+
+# ------------------------------------------------------------------------------
+# Config Management Related
+# ------------------------------------------------------------------------------
+dir_home = Path.home()  # ${HOME}
+dir_home_project_root = dir_home / ".projects" / PACKAGE_NAME
+
+dir_config = dir_project_root / "config"
+# where you store the non-sensitive config data
+path_config_json = dir_config / "config.json"
+# where you store the sensitive config dat
+path_config_secret_json = dir_home_project_root / "config-secret.json"

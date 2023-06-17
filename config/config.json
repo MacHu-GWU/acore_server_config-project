@@ -1,0 +1,23 @@
+{
+    "_shared": {
+        "*.project_name": "acore_server_config"
+    },
+    "sbx": {
+        "servers": {
+            "blue": {},
+            "green": {}
+        }
+    },
+    "tst": {
+        "servers": {
+            "blue": {},
+            "green": {}
+        }
+    },
+    "prd": {
+        "servers": {
+            "blue": {},
+            "green": {}
+        }
+    }
+}
