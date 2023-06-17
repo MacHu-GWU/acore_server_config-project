@@ -1,9 +1,19 @@
 # -*- coding: utf-8 -*-
 
-from acore_server_config.config.init import config
+from acore_server_config.config.define import Env, EnvEnum, Config
+from acore_server_config.paths import dir_unit_test, path_config_json
+
+path_config_secret_json = dir_unit_test.joinpath("config", "config-secret.json")
 
 
 def test():
+    config = Config.read(
+        env_class=Env,
+        env_enum_class=EnvEnum,
+        path_config=path_config_json,
+        path_secret_config=path_config_secret_json,
+    )
+
     # main.py
     _ = config
     _ = config.env

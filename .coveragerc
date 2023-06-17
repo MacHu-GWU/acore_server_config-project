@@ -5,7 +5,10 @@ omit =
     acore_server_config/docs/*
     acore_server_config/tests/*
     acore_server_config/vendor/*
+    acore_server_config/config/init.py
     acore_server_config/_version.py
+    acore_server_config/boto_ses.py
+    acore_server_config/compat.py
     acore_server_config/cli.py
     acore_server_config/paths.py
 
