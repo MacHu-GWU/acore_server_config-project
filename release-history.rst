@@ -15,6 +15,15 @@ x.y.z (Backlog)
 **Miscellaneous**
 
 
+0.2.1 (2023-06-17)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Features and Improvements**
+
+- Add support to use AWS S3 as the backend
+- Now AWS S3 is the default backend
+- Add support to manage game server configuration (the ``*.conf`` file)
+
+
 0.1.3 (2023-06-17)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Bugfixes**
