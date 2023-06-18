@@ -47,7 +47,7 @@ def get_server(
     server_id = ec2_inst.tags[settings.ID_TAG_KEY]
 
     env_name, server_name = server_id.split("-", 1)
-    parameter_name = f"{parameter_name_prefix}-{env_name}"
+    parameter_name = f"{parameter_name_prefix}{env_name}"
 
     config = Config.read(
         env_class=Env,
