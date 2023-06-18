@@ -19,7 +19,7 @@ if T.TYPE_CHECKING:
 
 
 def get_server(
-    bsm: BotoSesManager = bsm,
+    bsm: "BotoSesManager" = bsm,
     parameter_name_prefix: str = "acore_server_config-",
 ) -> Server:
     ec2_inst = Ec2Instance.from_ec2_inside(bsm.ec2_client)
