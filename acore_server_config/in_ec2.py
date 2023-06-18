@@ -57,5 +57,5 @@ def get_server(
         parameter_with_encryption=True,
     )
     env = config.get_env(env_name=env_name)
-    server = env.servers[server_id]
+    server = env.servers[server_name]
     return server
