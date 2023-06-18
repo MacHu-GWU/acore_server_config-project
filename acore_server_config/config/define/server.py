@@ -18,10 +18,14 @@ class Server:
     :param db_username: the database user for game server
     :param db_password: the database password for game server
     """
+
     id: T.Optional[str] = dataclasses.field(default=None)
     db_admin_password: T.Optional[str] = dataclasses.field(default=None)
     db_username: T.Optional[str] = dataclasses.field(default=None)
     db_password: T.Optional[str] = dataclasses.field(default=None)
+    authserver_conf: T.Dict[str, str] = dataclasses.field(default_factory=dict)
+    worldserver_conf: T.Dict[str, str] = dataclasses.field(default_factory=dict)
+    mod_lua_engine_conf: T.Dict[str, str] = dataclasses.field(default_factory=dict)
 
 
 @dataclasses.dataclass

@@ -25,6 +25,9 @@ def test():
         _ = server.db_admin_password
         _ = server.db_username
         _ = server.db_password
+        _ = server.authserver_conf
+        _ = server.worldserver_conf
+        _ = server.mod_lua_engine_conf
 
     _ = config.env.server_blue
     _ = config.env.server_green
