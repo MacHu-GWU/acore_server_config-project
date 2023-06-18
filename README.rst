@@ -32,9 +32,6 @@
 .. image:: https://img.shields.io/badge/Link-API-blue.svg
     :target: https://acore-server-config.readthedocs.io/en/latest/py-modindex.html
 
-.. image:: https://img.shields.io/badge/Link-Install-blue.svg
-    :target: `install`_
-
 .. image:: https://img.shields.io/badge/Link-GitHub-blue.svg
     :target: https://github.com/MacHu-GWU/acore_server_config-project
 
