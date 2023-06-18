@@ -49,7 +49,7 @@ def _get_default_parameter_name_prefix() -> str:
 
 def get_server(
     bsm: "BotoSesManager" = default_bsm,
-    parameter_name_prefix: T.Optional[str] = "acore_server_config",
+    parameter_name_prefix: T.Optional[str] = None,
     use_s3: bool = True,
     use_parameter_store: bool = False,
     s3folder_config: T.Optional[str] = None,
