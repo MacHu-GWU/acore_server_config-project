@@ -6,6 +6,7 @@ name: CI
 on:
   push: # any push event to master will trigger this
     branches: ["main"]
+#    branches: ["invalid"]
   pull_request: # any pull request to master will trigger this
     branches: ["main"]
   workflow_dispatch: # allows you to manually trigger run
@@ -39,6 +40,7 @@ jobs:
           python -m site
           python -m pip install --upgrade pip setuptools wheel virtualenv
           pip install -r requirements.txt
+          pip install -r requirements-dev.txt
           pip install -r requirements-test.txt
           pip install .
       - if: matrix.os == 'windows-latest'
@@ -47,6 +49,7 @@ jobs:
           python -m site
           python -m pip install --upgrade pip setuptools wheel virtualenv
           pip install -r requirements.txt
+          pip install -r requirements-dev.txt
           pip install -r requirements-test.txt
           pip install .
       - name: "Run pytest"
