@@ -20,6 +20,7 @@ Usage:
 
 import typing as T
 
+from s3pathlib import S3Path
 from simple_aws_ec2.api import Ec2Instance
 from acore_server_metadata.api import settings
 
@@ -30,9 +31,28 @@ if T.TYPE_CHECKING:
     from boto_session_manager import BotoSesManager
 
 
+def _get_default_s3folder_config(bsm: "BotoSesManager") -> str:
+    return (
+        S3Path(f"s3://{bsm.aws_account_id}-{bsm.aws_region}-artifacts")
+        .joinpath(
+            "projects",
+            "acore_server_config",
+            "config",
+        )
+        .to_dir()
+    ).uri
+
+
+def _get_default_parameter_name_prefix() -> str:
+    return "acore_server_config-"
+
+
 def get_server(
     bsm: "BotoSesManager" = bsm,
-    parameter_name_prefix: str = "acore_server_config-",
+    use_s3: bool = False,
+    use_parameter_store: bool = False,
+    s3folder_config: T.Optional[str] = None,
+    parameter_name_prefix: T.Optional[str] = "acore_server_config-",
 ) -> Server:
     """
     在 EC2 上通过 "自省", 获得属于这个服务器的配置数据.
@@ -45,17 +65,31 @@ def get_server(
     """
     ec2_inst = Ec2Instance.from_ec2_inside(bsm.ec2_client)
     server_id = ec2_inst.tags[settings.ID_TAG_KEY]
-
     env_name, server_name = server_id.split("-", 1)
-    parameter_name = f"{parameter_name_prefix}{env_name}"
 
-    config = Config.read(
-        env_class=Env,
-        env_enum_class=EnvEnum,
-        bsm=bsm,
-        parameter_name=parameter_name,
-        parameter_with_encryption=True,
-    )
+    if use_s3:
+        if s3folder_config is None:
+            s3folder_config = _get_default_s3folder_config(bsm=bsm)
+        config = Config.read(
+            env_class=Env,
+            env_enum_class=EnvEnum,
+            bsm=bsm,
+            s3folder_config=s3folder_config,
+        )
+    elif use_parameter_store:
+        if parameter_name_prefix is None:
+            parameter_name_prefix = _get_default_parameter_name_prefix()
+        parameter_name = f"{parameter_name_prefix}{env_name}"
+        config = Config.read(
+            env_class=Env,
+            env_enum_class=EnvEnum,
+            bsm=bsm,
+            parameter_name=parameter_name,
+            parameter_with_encryption=True,
+        )
+    else:  # pragma: no cover
+        raise NotImplementedError
+
     env = config.get_env(env_name=env_name)
     server = env.servers[server_name]
     return server

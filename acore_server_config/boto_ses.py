@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from s3pathlib import context
 from boto_session_manager import BotoSesManager
 
 from .runtime import IS_LOCAL, IS_GITHUB_CI, IS_EC2, IS_CODEBUILD_CI
@@ -21,3 +22,5 @@ elif IS_EC2 or IS_CODEBUILD_CI:
     )
 else:  # pragma: no cover
     raise NotImplementedError
+
+context.attach_boto_session(boto_ses=bsm.boto_ses)

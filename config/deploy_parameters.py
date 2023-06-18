@@ -1,7 +1,17 @@
 # -*- coding: utf-8 -*-
 
+from s3pathlib import S3Path
 from acore_server_config.boto_ses import bsm
 from acore_server_config.config.init import config
 
-config.deploy(bsm=bsm, parameter_with_encryption=True)
-# config.delete(bsm=bsm, use_parameter_store=True)
+s3folder_config = (
+    S3Path(f"s3://{bsm.aws_account_id}-{bsm.aws_region}-artifacts")
+    .joinpath(
+        "projects",
+        "acore_server_config",
+        "config",
+    )
+    .to_dir()
+)
+config.deploy(bsm=bsm, s3folder_config=s3folder_config)
+# config.delete(bsm=bsm, s3folder_config=s3folder_config, include_history=True)
