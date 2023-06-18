@@ -1,5 +1,5 @@
 
-.. .. image:: https://readthedocs.org/projects/acore-server-config/badge/?version=latest
+.. image:: https://readthedocs.org/projects/acore-server-config/badge/?version=latest
     :target: https://acore-server-config.readthedocs.io/en/latest/
     :alt: Documentation Status
 
@@ -26,10 +26,10 @@
 
 ------
 
-.. .. image:: https://img.shields.io/badge/Link-Document-blue.svg
+.. image:: https://img.shields.io/badge/Link-Document-blue.svg
     :target: https://acore-server-config.readthedocs.io/en/latest/
 
-.. .. image:: https://img.shields.io/badge/Link-API-blue.svg
+.. image:: https://img.shields.io/badge/Link-API-blue.svg
     :target: https://acore-server-config.readthedocs.io/en/latest/py-modindex.html
 
 .. image:: https://img.shields.io/badge/Link-Install-blue.svg
@@ -60,4 +60,4 @@ Welcome to ``acore_server_config`` Documentation
 
 2. **而从服务器的角度看, 出于安全考虑, 每个服务器只要知道自己的配置即可, 不需要知道其他服务器的配置. 所以我们需要一个脚本用于 "自省" (自己判断自己是谁, 去哪里读取配置数据) 并读取属于自己这个服务器的配置数据**. 这个脚本只需要能在服务器上运行即可.
 
-为了解决以上两个需求, 我创建了这一项目. 请阅读 `完整文档 <https://acore-server-config.readthedocs.io/en/latest/>`_ 做进一步了解.
+为了解决以上两个需求, 我创建了这一项目. 请阅读完整文档 (点击 Document 标签) 做进一步了解.
