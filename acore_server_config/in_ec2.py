@@ -24,7 +24,7 @@ from s3pathlib import S3Path
 from simple_aws_ec2.api import Ec2Instance
 from acore_server_metadata.api import settings
 
-from .boto_ses import bsm
+from .boto_ses import bsm as default_bsm
 from .config.define import EnvEnum, Env, Config, Server
 
 if T.TYPE_CHECKING:
@@ -44,37 +44,44 @@ def _get_default_s3folder_config(bsm: "BotoSesManager") -> str:
 
 
 def _get_default_parameter_name_prefix() -> str:
-    return "acore_server_config-"
+    return "acore_server_config"
 
 
 def get_server(
-    bsm: "BotoSesManager" = bsm,
+    bsm: "BotoSesManager" = default_bsm,
+    parameter_name_prefix: T.Optional[str] = "acore_server_config",
     use_s3: bool = True,
     use_parameter_store: bool = False,
     s3folder_config: T.Optional[str] = None,
-    parameter_name_prefix: T.Optional[str] = "acore_server_config-",
+    server_id: T.Optional[str] = None,
 ) -> Server:
     """
     在 EC2 上通过 "自省", 获得属于这个服务器的配置数据.
 
     配置数据的详细数据结构请参考 :class:`acore_server_config.config.define.server.Server`.
 
-    :param bsm:
+    :param bsm: BotoSesManager 实例. 默认使用 EC2 上 IAM Role 所对应的.
+    :param parameter_name_prefix: the parameter name prefix, the full name will
+        be ${parameter_name_prefix}-${env_name}.
     :param use_s3: 是否从 S3 读取配置数据, 默认使用 S3, 因为配置数据可能会很大.
     :param use_parameter_store: 是否从 AWS Parameter Store 读取配置数据
     :param s3folder_config: S3 配置数据的根目录, 默认为
         s3://aws_account_id}-{aws_region}-artifacts/projects/acore_server_config/config/
-    :param parameter_name_prefix: AWS parameter name prefix, the full name will
-        be ${parameter_name_prefix}-${server_id}.
+    :param server_id: 强制指定 server_id, 跳过 "自省" 阶段. 常用于测试. 这个 server_id
+        的格式为: ${env_name}-${server_name}, 例如: sbx-blue
     """
     if sum([use_s3, use_parameter_store]) != 1:
         raise ValueError(
             "Only one of use_s3 and use_parameter_store can be True at the same time."
         )
 
-    ec2_inst = Ec2Instance.from_ec2_inside(bsm.ec2_client)
-    server_id = ec2_inst.tags[settings.ID_TAG_KEY]
+    if server_id is None:
+        ec2_inst = Ec2Instance.from_ec2_inside(bsm.ec2_client)
+        server_id = ec2_inst.tags[settings.ID_TAG_KEY]
     env_name, server_name = server_id.split("-", 1)
+    if parameter_name_prefix is None:
+        parameter_name_prefix = _get_default_parameter_name_prefix()
+    parameter_name = f"{parameter_name_prefix}-{env_name}"
 
     if use_s3:
         if s3folder_config is None:
@@ -83,12 +90,10 @@ def get_server(
             env_class=Env,
             env_enum_class=EnvEnum,
             bsm=bsm,
+            parameter_name=parameter_name,
             s3folder_config=s3folder_config,
         )
     elif use_parameter_store:
-        if parameter_name_prefix is None:
-            parameter_name_prefix = _get_default_parameter_name_prefix()
-        parameter_name = f"{parameter_name_prefix}{env_name}"
         config = Config.read(
             env_class=Env,
             env_enum_class=EnvEnum,

@@ -4,7 +4,7 @@ from acore_server_config.in_ec2 import get_server
 
 
 def test():
-    server = get_server()
+    server = get_server(server_id="sbx-blue")
     print(server)
 
 
