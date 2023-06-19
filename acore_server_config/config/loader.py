@@ -111,6 +111,14 @@ class Ec2ConfigLoader:
     """
     用于在 EC2 上运行脚本, 用 "自省" 的方式获得自己的配置数据. 开始时请使用
     :meth:`Ec2ConfigLoader.load` 方法获得当前 EC2 的配置数据.
+    
+    用法:
+    
+    .. code-block:: python
+    
+        >>> server = Ec2ConfigLoader.load(...)
+        >>> server
+        Server(id='sbx-blue', db_admin_password='sbx*dummy4test', db_username='myuser', db_password='sbx*dummy4test')
     """
 
     @classmethod
@@ -156,11 +164,12 @@ class ConfigLoader:
 
     .. code-block:: python
 
-        >>> config_loader = ConfigLoader.new()
-        >>> for server_name, server in config_loader.iter_servers:
+        >>> config_loader = ConfigLoader.new(...)
+        >>> for server_name, server in config_loader.iter_servers():
         ...
         >>> server = config_loader.get_server(server_name="blue")
-
+        >>> server
+        Server(id='sbx-blue', db_admin_password='sbx*dummy4test', db_username='myuser', db_password='sbx*dummy4test')
     """
 
     _env: Env = dataclasses.field(init=False)  # a cache of the env specific config
@@ -205,5 +214,8 @@ class ConfigLoader:
     def get_server(self, server_name: str) -> Server:
         """
         获得特定 server 的配置数据.
+
+        :param server_name: 服务器的名字 (不包括环境名, 包括环境名的字符串是 server_id).
+            例如 "blue", "green" 等.
         """
         return self._env.servers[server_name]

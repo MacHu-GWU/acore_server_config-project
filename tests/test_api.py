@@ -15,6 +15,8 @@ def test():
     _ = api.Config
     _ = api.Server
     _ = api.get_server
+    _ = api.Ec2ConfigLoader
+    _ = api.ConfigLoader
     _ = api.bsm
 
 
