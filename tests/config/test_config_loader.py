@@ -34,7 +34,6 @@ class TestConfigLoader(BaseMockTest):
         config_loader = ConfigLoader.new(
             bsm=self.bsm,
             env_name="sbx",
-            parameter_name_prefix="acore_server_config",
         )
         config_loader.iter_servers()
         server = config_loader.get_server(server_name="blue")

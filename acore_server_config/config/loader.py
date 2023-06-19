@@ -111,11 +111,11 @@ class Ec2ConfigLoader:
     """
     用于在 EC2 上运行脚本, 用 "自省" 的方式获得自己的配置数据. 开始时请使用
     :meth:`Ec2ConfigLoader.load` 方法获得当前 EC2 的配置数据.
-    
+
     用法:
-    
+
     .. code-block:: python
-    
+
         >>> server = Ec2ConfigLoader.load(...)
         >>> server
         Server(id='sbx-blue', db_admin_password='sbx*dummy4test', db_username='myuser', db_password='sbx*dummy4test')
@@ -124,22 +124,23 @@ class Ec2ConfigLoader:
     @classmethod
     def load(
         cls,
-        bsm: "BotoSesManager" = default_bsm,
         parameter_name_prefix: T.Optional[str] = None,
         s3folder_config: T.Optional[str] = None,
         server_id: T.Optional[str] = None,
+        bsm: "BotoSesManager" = default_bsm,
     ) -> Server:
         """
         获得当前 EC2 的配置数据, 返回一个
         :class:`~acore_server_config.config.define.server.Server` 对象.
 
-        :param bsm: BotoSesManager 实例.
         :param parameter_name_prefix: the parameter name prefix, the full name will
             be ${parameter_name_prefix}-${env_name}.
         :param s3folder_config: S3 配置数据的根目录, 默认为
             s3://aws_account_id}-{aws_region}-artifacts/projects/acore_server_config/config/
         :param server_id: 强制指定 server_id, 跳过 "自省" 阶段. 常用于测试. 这个 server_id
             的格式为: ${env_name}-${server_name}, 例如: sbx-blue
+        :param bsm: ``boto_session_manager.BotoSesManager`` object, if not provided,
+            then use the current runtime default AWS CLI profile.
         """
         if server_id is None:  # pragma: no cover
             server_id = get_this_server_id(bsm=bsm)
@@ -177,21 +178,22 @@ class ConfigLoader:
     @classmethod
     def new(
         cls,
-        bsm: "BotoSesManager",
         env_name: str,
         parameter_name_prefix: T.Optional[str] = None,
         s3folder_config: T.Optional[str] = None,
+        bsm: "BotoSesManager" = default_bsm,
     ) -> "ConfigLoader":
         """
         创建一个新的 ConfigLoader 对象,
 
-        :param bsm: BotoSesManager 实例.
         :param env_name: the environment name of the env specific config you want to
             load from, stx, tst, prd, etc. If None, then load the master config.
         :param parameter_name_prefix: the parameter name prefix, the full name will
             be ${parameter_name_prefix}-${env_name}.
         :param s3folder_config: S3 配置数据的根目录, 默认为
             s3://aws_account_id}-{aws_region}-artifacts/projects/acore_server_config/config/
+        :param bsm: ``boto_session_manager.BotoSesManager`` object, if not provided,
+            then use the current runtime default AWS CLI profile.
         """
         config = get_config(
             bsm=bsm,

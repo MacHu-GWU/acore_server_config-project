@@ -12,4 +12,5 @@ sub packages and modules
 
     define <define/__init__>
     init <init>
+    loader <loader>
     
