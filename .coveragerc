@@ -11,6 +11,7 @@ omit =
     acore_server_config/compat.py
     acore_server_config/cli.py
     acore_server_config/paths.py
+    acore_server_config/in_ec2.py
 
 [report]
 # Regexes for lines to exclude from consideration

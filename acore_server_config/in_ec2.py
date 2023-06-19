@@ -19,6 +19,7 @@ Usage:
 
 
 import typing as T
+import warnings
 
 from s3pathlib import S3Path
 from simple_aws_ec2.api import Ec2Instance
@@ -70,6 +71,10 @@ def get_server(
     :param server_id: 强制指定 server_id, 跳过 "自省" 阶段. 常用于测试. 这个 server_id
         的格式为: ${env_name}-${server_name}, 例如: sbx-blue
     """
+    warnings.warn(
+        "you should not use this function anymore, use "
+        "'acore_server_config.api.Ec2ConfigLoader' instead."
+    )
     if sum([use_s3, use_parameter_store]) != 1:
         raise ValueError(
             "Only one of use_s3 and use_parameter_store can be True at the same time."

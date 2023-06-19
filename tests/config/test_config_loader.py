@@ -37,7 +37,6 @@ class TestConfigLoader(BaseMockTest):
             parameter_name_prefix="acore_server_config",
         )
         config_loader.iter_servers()
-        print(config_loader._env.servers)
         server = config_loader.get_server(server_name="blue")
         assert server == config_loader._env.server_blue
         assert server.id == "sbx-blue"
