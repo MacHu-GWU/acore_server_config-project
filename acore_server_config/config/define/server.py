@@ -21,6 +21,9 @@ class Server:
         to create the database user.
     :param db_username: the database user for game server
     :param db_password: the database password for game server
+    :param authserver_conf: custom config for authserver.conf
+    :param worldserver_conf: custom config for worldserver.conf
+    :param mod_lua_engine_conf: custom config for mod_LuaEngine.conf
     """
 
     id: T.Optional[str] = dataclasses.field(default=None)
