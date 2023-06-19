@@ -1,19 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from acore_server_config.config.define import Env, EnvEnum, Config
-from acore_server_config.paths import dir_unit_test, path_config_json
-
-path_config_secret_json = dir_unit_test.joinpath("config", "config-secret.json")
+from acore_server_config.tests.dummy_config import config
 
 
 def test():
-    config = Config.read(
-        env_class=Env,
-        env_enum_class=EnvEnum,
-        path_config=path_config_json,
-        path_secret_config=path_config_secret_json,
-    )
-
     # main.py
     _ = config
     _ = config.env
@@ -36,4 +26,4 @@ def test():
 if __name__ == "__main__":
     from acore_server_config.tests import run_cov_test
 
-    run_cov_test(__file__, "acore_server_config.config", preview=False)
+    run_cov_test(__file__, "acore_server_config.config.define", preview=False)
