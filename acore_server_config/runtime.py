@@ -22,6 +22,9 @@ IS_LOCAL = False
 IS_GITHUB_CI = False
 IS_EC2 = False
 IS_CODEBUILD_CI = False
+IS_LAMBDA = False
+IS_BATCH = False
+IS_FARGATE = False
 
 
 class RunTimeEnum(str, enum.Enum):
@@ -29,6 +32,9 @@ class RunTimeEnum(str, enum.Enum):
     github_ci = "github_ci"
     ec2 = "ec2"
     codebuild_ci = "codebuild_ci"
+    awslambda = "awslambda"
+    batch = "batch"
+    fargate = "fargate"
     unknown = "unknown"
 
 
@@ -47,6 +53,18 @@ elif "CODEBUILD_CI" in os.environ:  # pragma: no cover
 elif "CI" in os.environ:  # pragma: no cover
     IS_GITHUB_CI = True
     CURRENT_RUNTIME = RunTimeEnum.github_ci.value
+# ref: https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars.html
+elif "AWS_LAMBDA_FUNCTION_NAME" in os.environ:  # pragma: no cover
+    IS_LAMBDA = True
+    CURRENT_RUNTIME = RunTimeEnum.awslambda.value
+# ref: https://docs.aws.amazon.com/batch/latest/userguide/job_env_vars.html
+elif "AWS_BATCH_JOB_ID" in os.environ:  # pragma: no cover
+    IS_BATCH = True
+    CURRENT_RUNTIME = RunTimeEnum.batch.value
+# ref: https://docs.aws.amazon.com/AmazonECS/latest/userguide/task-metadata-endpoint-v4-fargate.html
+elif "ECS_CONTAINER_METADATA_URI_V4" in os.environ or "ECS_CONTAINER_METADATA_URI" in os.environ:  # pragma: no cover
+    IS_FARGATE = True
+    CURRENT_RUNTIME = RunTimeEnum.fargate.value
 else:  # pragma: no cover
     IS_LOCAL = True
     CURRENT_RUNTIME = RunTimeEnum.local.value
