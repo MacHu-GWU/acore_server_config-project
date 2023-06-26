@@ -23,7 +23,7 @@ import warnings
 
 from s3pathlib import S3Path
 from simple_aws_ec2.api import Ec2Instance
-from acore_server_metadata.api import settings
+from acore_constants.api import TagKey
 
 from .boto_ses import bsm as default_bsm
 from .config.define import EnvEnum, Env, Config, Server
@@ -61,6 +61,11 @@ def get_server(
 
     配置数据的详细数据结构请参考 :class:`acore_server_config.config.define.server.Server`.
 
+    .. note::
+    
+        从 0.3.1 开始, 该函数被 Ec2ConfigLoader 和 ConfigLoader 所替代, 该函数仍然保留
+        但不建议使用.
+
     :param bsm: BotoSesManager 实例. 默认使用 EC2 上 IAM Role 所对应的.
     :param parameter_name_prefix: the parameter name prefix, the full name will
         be ${parameter_name_prefix}-${env_name}.
@@ -82,7 +87,7 @@ def get_server(
 
     if server_id is None:
         ec2_inst = Ec2Instance.from_ec2_inside(bsm.ec2_client)
-        server_id = ec2_inst.tags[settings.ID_TAG_KEY]
+        server_id = ec2_inst.tags[TagKey.SERVER_ID]
     env_name, server_name = server_id.split("-", 1)
     if parameter_name_prefix is None:
         parameter_name_prefix = _get_default_parameter_name_prefix()

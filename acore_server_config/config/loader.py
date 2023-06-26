@@ -16,7 +16,7 @@ import typing as T
 
 from s3pathlib import S3Path
 from simple_aws_ec2.api import Ec2Instance
-from acore_server_metadata.api import settings
+from acore_constants.api import TagKey
 
 from ..boto_ses import bsm as default_bsm
 
@@ -55,7 +55,7 @@ def get_this_server_id(bsm: "BotoSesManager") -> str:  # pragma: no cover
     ``${env_name}-${server_name}``.
     """
     ec2_inst = Ec2Instance.from_ec2_inside(bsm.ec2_client)
-    server_id = ec2_inst.tags[settings.ID_TAG_KEY]
+    server_id = ec2_inst.tags[TagKey.SERVER_ID]
     return server_id
 
 
