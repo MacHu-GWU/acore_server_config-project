@@ -40,7 +40,9 @@ class RunTimeEnum(str, enum.Enum):
 
 CURRENT_RUNTIME: str = RunTimeEnum.unknown.value
 
-if os.environ.get("HOME", "NA") == "/home/ubuntu":  # pragma: no cover
+# don't rely on $HOME env var, you may on EC2 and use sudo, then the $HOME is /root
+# but actually you are on EC2
+if os.path.exists("/home/ubuntu"):
     IS_EC2 = True
     CURRENT_RUNTIME = RunTimeEnum.ec2.value
 # if you use AWS CodeBuild for CI/CD
