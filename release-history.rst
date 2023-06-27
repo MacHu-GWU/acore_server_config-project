@@ -15,6 +15,23 @@ x.y.z (Backlog)
 **Miscellaneous**
 
 
+0.4.1 (2023-06-26)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Features and Improvements**
+
+- merge the following config field from ``wserver_fleet_manager`` project:
+    - ``acore_config.config.define.server.Server.ec2_ami_id``
+    - ``acore_config.config.define.server.Server.ec2_instance_type``
+    - ``acore_config.config.define.server.Server.ec2_subnet_id``
+    - ``acore_config.config.define.server.Server.ec2_key_name``
+    - ``acore_config.config.define.server.Server.ec2_eip_allocation_id``
+    - ``acore_config.config.define.server.Server.acore_soap_app_version``
+    - ``acore_config.config.define.server.Server.acore_server_bootstrap_version``
+    - ``acore_config.config.define.server.Server.db_snapshot_id``
+    - ``acore_config.config.define.server.Server.db_instance_class``
+    - ``acore_config.config.define.server.Server.lifecycle``
+
+
 0.3.4 (2023-06-26)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Bugfixes**
