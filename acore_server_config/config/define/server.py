@@ -7,6 +7,8 @@ todo: doc string
 import typing as T
 import dataclasses
 
+from acore_constants.api import ServerLifeCycle
+
 if T.TYPE_CHECKING:  # pragma: no cover
     from .main import Env
 
@@ -60,6 +62,15 @@ class Server:
     authserver_conf: T.Dict[str, str] = dataclasses.field(default_factory=dict)
     worldserver_conf: T.Dict[str, str] = dataclasses.field(default_factory=dict)
     mod_lua_engine_conf: T.Dict[str, str] = dataclasses.field(default_factory=dict)
+
+    def __post_init__(self):
+        if self.lifecycle not in [
+            ServerLifeCycle.running,
+            ServerLifeCycle.smart_running,
+            ServerLifeCycle.stopped,
+            ServerLifeCycle.deleted,
+        ]:  # pragma: no cover
+            raise ValueError(f"{self.lifecycle!r} is not a valid lifecycle definition!")
 
 
 @dataclasses.dataclass

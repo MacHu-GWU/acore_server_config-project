@@ -165,7 +165,7 @@ class ConfigLoader:
 
     .. code-block:: python
 
-        >>> config_loader = ConfigLoader.new(...)
+        >>> config_loader = ConfigLoader.new(env_name="sbx")
         >>> for server_name, server in config_loader.iter_servers():
         ...
         >>> server = config_loader.get_server(server_name="blue")
