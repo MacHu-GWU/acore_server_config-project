@@ -19,4 +19,4 @@ s3folder_config = (
     .to_dir()
 )
 config.deploy(bsm=bsm, s3folder_config=s3folder_config)
-config.delete(bsm=bsm, s3folder_config=s3folder_config, include_history=True)
+# config.delete(bsm=bsm, s3folder_config=s3folder_config, include_history=True)
