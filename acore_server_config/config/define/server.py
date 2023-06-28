@@ -49,6 +49,7 @@ class Server:
     ec2_key_name: T.Optional[str] = dataclasses.field(default=None)
     ec2_eip_allocation_id: T.Optional[str] = dataclasses.field(default=None)
     acore_soap_app_version: T.Optional[str] = dataclasses.field(default=None)
+    acore_db_app_version: T.Optional[str] = dataclasses.field(default=None)
     acore_server_bootstrap_version: T.Optional[str] = dataclasses.field(default=None)
     # RDS related
     db_snapshot_id: T.Optional[str] = dataclasses.field(default=None)
