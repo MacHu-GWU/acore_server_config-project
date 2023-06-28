@@ -3,7 +3,7 @@
 import os
 from s3pathlib import context
 from boto_session_manager import BotoSesManager
-from simple_aws_ec2.api import Ec2Instance
+from simple_aws_ec2.api import EC2MetadataCache
 
 
 from .runtime import (
@@ -28,7 +28,7 @@ elif IS_GITHUB_CI:
     )
 elif IS_EC2:
     bsm = BotoSesManager(
-        region_name=Ec2Instance.get_placement_region(),
+        region_name=EC2MetadataCache.load().get_region(),
     )
 elif IS_CODEBUILD_CI:
     bsm = BotoSesManager(
