@@ -61,4 +61,6 @@ jobs:
         if: "contains(env.USING_COVERAGE, matrix.python-version)"
         uses: "codecov/codecov-action@v3" # https://github.com/marketplace/actions/codecov-action
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: MacHu-GWU/packer_ami_workflow-project
           fail_ci_if_error: true

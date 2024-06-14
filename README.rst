@@ -47,7 +47,8 @@
 
 Welcome to ``acore_server_config`` Documentation
 ==============================================================================
-📔 `完整文档点这里 <https://acore-server-config.readthedocs.io/en/latest/>`_
+.. image:: https://acore-server-config.readthedocs.io/en/latest/_static/acore_server_config-logo.png
+    :target: https://acore-server-config.readthedocs.io/en/latest/
 
 **项目背景**
 
