@@ -15,6 +15,20 @@ x.y.z (Backlog)
 **Miscellaneous**
 
 
+0.5.2 (2024-060-16)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Features and Improvements**
+
+**Minor Improvements**
+
+- Add support for 3.11, 3.12
+- Rework the documentation.
+
+**Bugfixes**
+
+- Fix a bug that caused by ``config_patterns<1.0.7``, bump config_pattern to 1.0.7+.
+
+
 0.5.1 (2023-07-28)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Features and Improvements**
