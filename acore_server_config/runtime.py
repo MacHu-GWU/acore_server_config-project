@@ -25,6 +25,7 @@ IS_CODEBUILD_CI = False
 IS_LAMBDA = False
 IS_BATCH = False
 IS_FARGATE = False
+IS_READTHEDOCS = False
 
 
 class RunTimeEnum(str, enum.Enum):
@@ -35,6 +36,7 @@ class RunTimeEnum(str, enum.Enum):
     awslambda = "awslambda"
     batch = "batch"
     fargate = "fargate"
+    readthedocs = "readthedocs"
     unknown = "unknown"
 
 
@@ -67,6 +69,10 @@ elif "AWS_BATCH_JOB_ID" in os.environ:  # pragma: no cover
 elif "ECS_CONTAINER_METADATA_URI_V4" in os.environ or "ECS_CONTAINER_METADATA_URI" in os.environ:  # pragma: no cover
     IS_FARGATE = True
     CURRENT_RUNTIME = RunTimeEnum.fargate.value
+# ref: https://docs.readthedocs.io/en/stable/reference/environment-variables.html
+elif "READTHEDOCS" in os.environ:  # pragma: no cover
+    IS_READTHEDOCS = True
+    CURRENT_RUNTIME = RunTimeEnum.readthedocs.value
 else:  # pragma: no cover
     IS_LOCAL = True
     CURRENT_RUNTIME = RunTimeEnum.local.value

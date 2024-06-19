@@ -14,6 +14,7 @@ from .runtime import (
     IS_LAMBDA,
     IS_BATCH,
     IS_FARGATE,
+    IS_READTHEDOCS,
 )
 
 # environment aware boto session manager
@@ -40,7 +41,12 @@ elif IS_LAMBDA:
     )
 elif IS_BATCH or IS_FARGATE:
     raise NotImplementedError
+elif IS_READTHEDOCS:
+    bsm = None
 else:  # pragma: no cover
     raise NotImplementedError
 
-context.attach_boto_session(boto_ses=bsm.boto_ses)
+if IS_READTHEDOCS:
+    pass
+else:
+    context.attach_boto_session(boto_ses=bsm.boto_ses)
