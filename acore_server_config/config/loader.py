@@ -106,6 +106,7 @@ def get_config(
     return config
 
 
+# [ec2configloader-start]
 @dataclasses.dataclass
 class Ec2ConfigLoader:
     """
@@ -153,8 +154,10 @@ class Ec2ConfigLoader:
         )
         env = config.get_env(env_name)
         return env.servers[server_name]
+# [ec2configloader-end]
 
 
+# [configloader-start]
 @dataclasses.dataclass
 class ConfigLoader:
     """
@@ -221,3 +224,4 @@ class ConfigLoader:
             例如 "blue", "green" 等.
         """
         return self._env.servers[server_name]
+# [configloader-end]
