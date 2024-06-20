@@ -9,9 +9,6 @@ import dataclasses
 
 from acore_constants.api import ServerLifeCycle
 
-if T.TYPE_CHECKING:  # pragma: no cover
-    from .main import Env
-
 
 @dataclasses.dataclass
 class Server:
@@ -31,6 +28,8 @@ class Server:
         git tag for bootstrap.
     :param db_snapshot_id: the snapshot id to create the RDS DB instance.
     :param db_instance_class: the RDS instance class for the game database.
+    :param db_engine_version: the RDS engine version (all the way to minor).
+    :param db_admin_username: the RDS admin username, usually this is admin.
     :param db_admin_password: the RDS admin password, we need this password.
         to create the database user for game server.
     :param db_username: the database user for game server.
@@ -54,6 +53,8 @@ class Server:
     # RDS related
     db_snapshot_id: T.Optional[str] = dataclasses.field(default=None)
     db_instance_class: T.Optional[str] = dataclasses.field(default=None)
+    db_engine_version: T.Optional[str] = dataclasses.field(default=None)
+    db_admin_username: T.Optional[str] = dataclasses.field(default=None)
     db_admin_password: T.Optional[str] = dataclasses.field(default=None)
     db_username: T.Optional[str] = dataclasses.field(default=None)
     db_password: T.Optional[str] = dataclasses.field(default=None)
@@ -73,6 +74,128 @@ class Server:
         ]:  # pragma: no cover
             raise ValueError(f"{self.lifecycle!r} is not a valid lifecycle definition!")
 
+    def is_ready_for_create_new_server(self) -> bool:
+        """
+        Check if the configuration is sufficient for creating new server.
+
+        See: https://acore-server.readthedocs.io/en/latest/search.html?q=Operation+and+Workflow&check_keywords=yes&area=default#
+        """
+        not_none_fields = [
+            "id",
+            "ec2_ami_id",
+            "ec2_instance_type",
+            "ec2_subnet_id",
+            "ec2_key_name",
+            "acore_soap_app_version",
+            "acore_db_app_version",
+            "acore_server_bootstrap_version",
+            "db_instance_class",
+            "db_engine_version",
+            "db_admin_username",
+            "db_admin_password",
+            "db_username",
+            "db_password",
+        ]
+        for field in not_none_fields:
+            if getattr(self, field) is None:
+                return False
+        return True
+
+    def is_ready_for_create_cloned_server(self) -> bool:
+        """
+        Check if the configuration is sufficient for creating cloned server.
+
+        See: https://acore-server.readthedocs.io/en/latest/search.html?q=Operation+and+Workflow&check_keywords=yes&area=default#
+        """
+        not_none_fields = [
+            "id",
+            "ec2_instance_type",
+            "ec2_subnet_id",
+            "ec2_key_name",
+            "acore_soap_app_version",
+            "acore_db_app_version",
+            "acore_server_bootstrap_version",
+            "db_instance_class",
+            # "db_engine_version", # clone 的时候不需要指定 engine version, 会自动继承
+            # "db_admin_username", # clone 的时候不需要指定 admin username, 会自动继承
+            "db_admin_password",
+            "db_username",
+            "db_password",
+        ]
+        for field in not_none_fields:
+            if getattr(self, field) is None:
+                return False
+        return True
+
+    def is_ready_for_create_updated_server(self) -> bool:
+        """
+        Check if the configuration is sufficient for creating updated server.
+
+        See: https://acore-server.readthedocs.io/en/latest/search.html?q=Operation+and+Workflow&check_keywords=yes&area=default#
+        """
+        not_none_fields = [
+            "id",
+            "ec2_ami_id",
+            "ec2_instance_type",
+            "ec2_subnet_id",
+            "ec2_key_name",
+            "acore_soap_app_version",
+            "acore_db_app_version",
+            "acore_server_bootstrap_version",
+            "db_instance_class",
+            # "db_engine_version", # update server 的时候不需要指定 engine version, 因为我们会用已经存在的数据库
+            # "db_admin_username", # update server 的时候不需要指定 admin username, 因为我们会用已经存在的数据库
+            "db_admin_password",
+            "db_username",
+            "db_password",
+        ]
+        for field in not_none_fields:
+            if getattr(self, field) is None:
+                return False
+        return True
+
+    def is_ready_for_stop_server(self) -> bool:
+        """
+        Check if the configuration is sufficient for stopping server.
+
+        See: https://acore-server.readthedocs.io/en/latest/search.html?q=Operation+and+Workflow&check_keywords=yes&area=default#
+        """
+        not_none_fields = [
+            "id",
+        ]
+        for field in not_none_fields:
+            if getattr(self, field) is None:
+                return False
+        return True
+
+    def is_ready_for_start_server(self) -> bool:
+        """
+        Check if the configuration is sufficient for starting server.
+
+        See: https://acore-server.readthedocs.io/en/latest/search.html?q=Operation+and+Workflow&check_keywords=yes&area=default#
+        """
+        not_none_fields = [
+            "id",
+        ]
+        for field in not_none_fields:
+            if getattr(self, field) is None:
+                return False
+        return True
+
+    def is_ready_for_delete_server(self) -> bool:
+        """
+        Check if the configuration is sufficient for deleting server.
+
+        See: https://acore-server.readthedocs.io/en/latest/search.html?q=Operation+and+Workflow&check_keywords=yes&area=default#
+        """
+        not_none_fields = [
+            "id",
+        ]
+        for field in not_none_fields:
+            if getattr(self, field) is None:
+                return False
+        return True
+
 
 @dataclasses.dataclass
 class ServerMixin:
@@ -85,3 +208,19 @@ class ServerMixin:
     @property
     def server_green(self) -> Server:
         return self.servers["green"]
+
+    @property
+    def server_black(self) -> Server:
+        return self.servers["black"]
+
+    @property
+    def server_white(self) -> Server:
+        return self.servers["white"]
+
+    @property
+    def server_yellow(self) -> Server:
+        return self.servers["yello"]
+
+    @property
+    def server_orange(self) -> Server:
+        return self.servers["orange"]

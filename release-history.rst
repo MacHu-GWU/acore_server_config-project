@@ -15,7 +15,31 @@ x.y.z (Backlog)
 **Miscellaneous**
 
 
-0.5.2 (2024-060-16)
+0.6.1 (2024-06-20)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Features and Improvements**
+
+- Add the following config field:
+    - ``db_engine_version``
+    - ``db_admin_username``
+- Add the following public API:
+    - ``acore_server_config.api.Server.is_ready_for_create_new_server``
+    - ``acore_server_config.api.Server.is_ready_for_create_cloned_server``
+    - ``acore_server_config.api.Server.is_ready_for_create_updated_server``
+    - ``acore_server_config.api.Server.is_ready_for_stop_server``
+    - ``acore_server_config.api.Server.is_ready_for_start_server``
+    - ``acore_server_config.api.Server.is_ready_for_delete_server``
+    - ``acore_server_config.api.Env.server_black``
+    - ``acore_server_config.api.Env.server_white``
+    - ``acore_server_config.api.Env.server_yellow``
+    - ``acore_server_config.api.Env.server_orange``
+
+**Minor Improvements**
+
+- Fix doc build.
+
+
+0.5.2 (2024-06-16)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Features and Improvements**
 
