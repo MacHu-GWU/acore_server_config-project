@@ -3,6 +3,9 @@
 """
 将所有服务器的配置数据部署到 AWS S3. 在这个项目中, 因为集群上的服务器数量多, 配置的内容复杂,
 最终配置数据可能会很大. 只有用 AWS S3 才可以存储任意多, 任意大的数据.
+
+- Edit non secret config data: ``~/Documents/GitHub/acore_server_config-project/config/config.json``
+- Edit secret config data: ``~/.projects/acore_server_config/config-secret.json``
 """
 
 from s3pathlib import S3Path
