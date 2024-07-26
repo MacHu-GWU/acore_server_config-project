@@ -5,19 +5,31 @@
     "sbx": {
         "servers": {
             "blue": {},
-            "green": {}
+            "green": {},
+            "black": {},
+            "white": {},
+            "yellow": {},
+            "orange": {}
         }
     },
     "tst": {
         "servers": {
             "blue": {},
-            "green": {}
+            "green": {},
+            "black": {},
+            "white": {},
+            "yellow": {},
+            "orange": {}
         }
     },
     "prd": {
         "servers": {
             "blue": {},
-            "green": {}
+            "green": {},
+            "black": {},
+            "white": {},
+            "yellow": {},
+            "orange": {}
         }
     }
 }

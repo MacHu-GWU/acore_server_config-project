@@ -30,9 +30,15 @@ if T.TYPE_CHECKING:  # pragma: no cover
 def _get_default_s3folder_config(bsm: "BotoSesManager") -> str:
     """
     获得默认的 S3 配置数据的根目录.
+
+    .. versionchanged:: 0.6.3
+
+        Change the default config bucket name from
+        ``{bsm.aws_account_id}-{bsm.aws_region}-artifacts``
+        to ``{bsm.aws_account_alias}-{bsm.aws_region}-artifacts``.
     """
     return (
-        S3Path(f"s3://{bsm.aws_account_id}-{bsm.aws_region}-artifacts")
+        S3Path(f"s3://{bsm.aws_account_alias}-{bsm.aws_region}-artifacts")
         .joinpath(
             "projects",
             "acore_server_config",

@@ -17,11 +17,13 @@ class TestConfigLoader(BaseMockTest):
     mock_list = [
         moto.mock_s3,
         moto.mock_sts,
+        moto.mock_iam,
     ]
 
     @classmethod
     def setup_class_post_hook(cls):
-        bucket = f"{cls.bsm.aws_account_id}-{cls.bsm.aws_region}-artifacts"
+        cls.bsm.iam_client.create_account_alias(AccountAlias="acore-sbx")
+        bucket = f"{cls.bsm.aws_account_alias}-{cls.bsm.aws_region}-artifacts"
         cls.bsm.s3_client.create_bucket(Bucket=bucket)
         s3folder_config = _get_default_s3folder_config(bsm=cls.bsm)
         config.deploy(bsm=cls.bsm, s3folder_config=s3folder_config, verbose=False)
